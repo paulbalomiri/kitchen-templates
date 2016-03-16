@@ -65,7 +65,8 @@ this.convertArrayOfObjects = function(data, exportFields, fileType) {
 			columnSeparator = ",";
 		}
 		if(fileType == "tsv") {
-			columnSeparator = "\t";
+			// "\t" object literal does not transpile correctly to coffeesctipt
+			columnSeparator = String.fromCharCode(9);
 		}
 
 		_.each(exportFields, function(field, i) {
@@ -74,7 +75,8 @@ this.convertArrayOfObjects = function(data, exportFields, fileType) {
 			}
 			str = str + "\"" + field + "\"";
 		});
-		str = str + "\r\n";
+		//\r does not transpile correctly
+		str = str + String.fromCharCode(13)+"\n";
 
 		_.each(data, function(doc) {
 			_.each(exportFields, function(field, i) {
@@ -89,7 +91,8 @@ this.convertArrayOfObjects = function(data, exportFields, fileType) {
 				else
 					str = str + "\"" + value + "\"";
 			});
-			str = str + "\r\n";
+			//\r does not transpile correctly
+			str = str +String.fromCharCode(13) +"\n";
 		});
 	}
 
